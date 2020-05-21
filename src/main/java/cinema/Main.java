@@ -12,7 +12,6 @@ public class Main {
         movie.setTitle("Another title");
         MovieService movieService = (MovieService) injector.getInstance(MovieService.class);
         movieService.add(movie);
-
         movieService.getAll().forEach(System.out::println);
     }
 }
