@@ -2,6 +2,7 @@ package cinema.dao.impl;
 
 import cinema.dao.Dao;
 import cinema.dao.MovieDao;
+import cinema.exception.DataProcessingException;
 import cinema.model.Movie;
 import cinema.util.HibernateUtil;
 import java.util.List;
@@ -25,7 +26,7 @@ public class MovieDaoImpl implements MovieDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            LOGGER.error(e);
+            throw new DataProcessingException(e.getMessage());
         }
         return movie;
     }
@@ -37,6 +38,8 @@ public class MovieDaoImpl implements MovieDao {
                     .getCriteriaBuilder().createQuery(Movie.class);
             criteriaQuery.from(Movie.class);
             return session.createQuery(criteriaQuery).getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException(e.getMessage());
         }
     }
 }
