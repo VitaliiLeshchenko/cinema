@@ -27,7 +27,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             if (transaction != null) {
                 transaction.rollback();
             }
-            throw new DataProcessingException("Can't create movie: " + movieSession, e);
+            throw new DataProcessingException("Can't create MovieSession: " + movieSession, e);
         }
         return movieSession;
     }
@@ -45,7 +45,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             criteriaQuery.where(predicateMovieId, predicateDate);
             return session.createQuery(criteriaQuery).getResultList();
         } catch (Exception e) {
-            throw new DataProcessingException("Error retrieving Movie Sessions", e);
+            throw new DataProcessingException("Can't get all movieSessions", e);
         }
     }
 }
