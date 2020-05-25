@@ -67,7 +67,6 @@ public class Main {
         movieSessionService.findAvailableSessions(movie1.getId(),
                 time1.toLocalDate()).forEach(System.out::println);
         System.out.println("---------******************---------");
-
         UserDao userDao = (UserDao) INJECTOR.getInstance(UserDao.class);
         User user = new User("123@gmail.com", "password");
         user = userDao.add(user);
