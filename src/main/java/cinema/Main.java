@@ -1,8 +1,12 @@
 package cinema;
 
+import cinema.dao.UserDao;
+import cinema.exception.AuthenticationException;
 import cinema.model.CinemaHall;
 import cinema.model.Movie;
 import cinema.model.MovieSession;
+import cinema.model.User;
+import cinema.service.AuthenticationService;
 import cinema.service.CinemaHallService;
 import cinema.service.MovieService;
 import cinema.service.MovieSessionService;
@@ -12,7 +16,7 @@ import java.time.LocalDateTime;
 public class Main {
     private static final Injector INJECTOR = Injector.getInstance("cinema");
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws AuthenticationException {
         MovieService movieService = (MovieService) INJECTOR.getInstance(MovieService.class);
         Movie movie1 = new Movie();
         movie1.setTitle("Terminator");
@@ -63,5 +67,17 @@ public class Main {
         movieSessionService.findAvailableSessions(movie1.getId(),
                 time1.toLocalDate()).forEach(System.out::println);
         System.out.println("---------******************---------");
+        UserDao userDao = (UserDao) INJECTOR.getInstance(UserDao.class);
+        User user = new User("123@gmail.com", "password");
+        user = userDao.add(user);
+        System.out.println(user);
+        System.out.println(userDao.findByEmail("123@gmail.com"));
+
+        AuthenticationService authenticationService
+                = (AuthenticationService) INJECTOR.getInstance(AuthenticationService.class);
+        User user1 = authenticationService.register("1234@gmail.com", "password");
+        System.out.println(user1);
+        User user2 = authenticationService.login("1234@gmail.com", "password");
+        System.out.println(user2);
     }
 }
