@@ -9,9 +9,10 @@
         <property name="connection.username">root</property>
         <property name="connection.password">1234</property>
         <property name="show_sql">true</property>
-        <property name="hbm2ddl.auto">create</property>
+        <property name="hbm2ddl.auto">create-drop</property>
         <mapping class="cinema.model.Movie" />
         <mapping class="cinema.model.MovieSession" />
         <mapping class="cinema.model.CinemaHall" />
+        <mapping class="cinema.model.User" />
     </session-factory>
 </hibernate-configuration>
