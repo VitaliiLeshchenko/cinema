@@ -4,11 +4,13 @@ import cinema.exception.AuthenticationException;
 import cinema.model.CinemaHall;
 import cinema.model.Movie;
 import cinema.model.MovieSession;
+import cinema.model.ShoppingCart;
 import cinema.model.User;
 import cinema.service.AuthenticationService;
 import cinema.service.CinemaHallService;
 import cinema.service.MovieService;
 import cinema.service.MovieSessionService;
+import cinema.service.OrderService;
 import cinema.service.ShoppingCartService;
 import cinema.util.Injector;
 import java.time.LocalDateTime;
@@ -84,7 +86,12 @@ public class Main {
                 new MovieSession(movie1, cinemaHall1, time1)), user2);
         scService.addSession(movieSessionService.add(
                 new MovieSession(movie2, cinemaHall2, time2)), user2);
-        System.out.println(scService.getByUser(user2));
+        ShoppingCart shoppingCart = scService.getByUser(user2);
+        System.out.println(shoppingCart);
+        System.out.println("_________________________*** HW_27.4 ***_________________________");
+        OrderService orderService = (OrderService) INJECTOR.getInstance(OrderService.class);
+        orderService.completeOrder(shoppingCart.getTickets(), user2);
+        orderService.getOrderHistory(user2).forEach(System.out::println);
 
     }
 }
