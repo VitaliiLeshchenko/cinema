@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
@@ -39,6 +40,8 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             CriteriaQuery<MovieSession> criteriaQuery = criteriaBuilder
                     .createQuery(MovieSession.class);
             Root<MovieSession> root = criteriaQuery.from(MovieSession.class);
+            root.fetch("movie", JoinType.INNER);
+            root.fetch("cinemaHall", JoinType.INNER);
             Predicate predicateMovieId = criteriaBuilder.equal(root.get("movie"), movieId);
             Predicate predicateDate = criteriaBuilder.between(root.get("showTime"),
                     date.atStartOfDay(), date.plusDays(1L).atStartOfDay());

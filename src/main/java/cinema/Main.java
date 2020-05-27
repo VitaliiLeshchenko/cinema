@@ -1,6 +1,5 @@
 package cinema;
 
-import cinema.dao.UserDao;
 import cinema.exception.AuthenticationException;
 import cinema.model.CinemaHall;
 import cinema.model.Movie;
@@ -10,6 +9,7 @@ import cinema.service.AuthenticationService;
 import cinema.service.CinemaHallService;
 import cinema.service.MovieService;
 import cinema.service.MovieSessionService;
+import cinema.service.ShoppingCartService;
 import cinema.util.Injector;
 import java.time.LocalDateTime;
 
@@ -67,17 +67,24 @@ public class Main {
         movieSessionService.findAvailableSessions(movie1.getId(),
                 time1.toLocalDate()).forEach(System.out::println);
         System.out.println("---------******************---------");
-        UserDao userDao = (UserDao) INJECTOR.getInstance(UserDao.class);
-        User user = new User("123@gmail.com", "password");
-        user = userDao.add(user);
-        System.out.println(user);
-        System.out.println(userDao.findByEmail("123@gmail.com"));
 
         AuthenticationService authenticationService
                 = (AuthenticationService) INJECTOR.getInstance(AuthenticationService.class);
         User user1 = authenticationService.register("1234@gmail.com", "password");
-        System.out.println(user1);
-        User user2 = authenticationService.login("1234@gmail.com", "password");
-        System.out.println(user2);
+
+        ShoppingCartService scService
+                = (ShoppingCartService) INJECTOR.getInstance(ShoppingCartService.class);
+        scService.registerNewShoppingCart(user1);
+        scService.addSession(movieSessionService.add(
+                new MovieSession(movie1, cinemaHall1, time1)), user1);
+        System.out.println(scService.getByUser(user1));
+        User user2 = authenticationService.register("4321@gmail.com", "password");
+        scService.registerNewShoppingCart(user2);
+        scService.addSession(movieSessionService.add(
+                new MovieSession(movie1, cinemaHall1, time1)), user2);
+        scService.addSession(movieSessionService.add(
+                new MovieSession(movie2, cinemaHall2, time2)), user2);
+        System.out.println(scService.getByUser(user2));
+
     }
 }
