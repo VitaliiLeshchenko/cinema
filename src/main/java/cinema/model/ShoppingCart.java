@@ -6,15 +6,15 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
 public class ShoppingCart {
     @Id
     private Long id;
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Ticket> tickets;
     private LocalDateTime orderDate;
     @OneToOne
@@ -64,7 +64,8 @@ public class ShoppingCart {
 
     @Override
     public String toString() {
-        return "ShoppingCart{id=" + id + ", tickets=" + tickets + "\n, orderDate=" + orderDate
-                + ", user=" + user + '}';
+        return "ShoppingCart{id = " + id + ", tickets = " + tickets.size()
+                + ", orderDate = " + orderDate
+                + ", user = " + user + '}';
     }
 }
