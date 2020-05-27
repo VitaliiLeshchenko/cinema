@@ -13,8 +13,10 @@ import org.hibernate.query.Query;
 public class UserDaoImpl implements UserDao {
     @Override
     public User add(User user) {
+        Session session = null;
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try {
+            session = HibernateUtil.getSessionFactory().openSession();
             transaction = session.beginTransaction();
             user.setId((Long) session.save(user));
             transaction.commit();
@@ -23,6 +25,10 @@ public class UserDaoImpl implements UserDao {
                 transaction.rollback();
             }
             throw new DataProcessingException("Can't create user : " + user, e);
+        } finally {
+            if (session != null) {
+                session.close();
+            }
         }
         return user;
     }
