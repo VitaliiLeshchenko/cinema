@@ -1,6 +1,5 @@
 package cinema.model;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -16,7 +15,6 @@ public class ShoppingCart {
     private Long id;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Ticket> tickets;
-    private LocalDateTime orderDate;
     @OneToOne
     @MapsId
     private User user;
@@ -24,9 +22,8 @@ public class ShoppingCart {
     public ShoppingCart() {
     }
 
-    public ShoppingCart(List<Ticket> tickets, LocalDateTime orderDate, User user) {
+    public ShoppingCart(List<Ticket> tickets, User user) {
         this.tickets = tickets;
-        this.orderDate = orderDate;
         this.user = user;
     }
 
@@ -46,14 +43,6 @@ public class ShoppingCart {
         this.tickets = tickets;
     }
 
-    public LocalDateTime getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(LocalDateTime orderDate) {
-        this.orderDate = orderDate;
-    }
-
     public User getUser() {
         return user;
     }
@@ -64,8 +53,7 @@ public class ShoppingCart {
 
     @Override
     public String toString() {
-        return "ShoppingCart{id = " + id + ", tickets = " + tickets.size()
-                + ", orderDate = " + orderDate
+        return "ShoppingCart{id = " + id + ", tickets = " + tickets
                 + ", user = " + user + '}';
     }
 }
