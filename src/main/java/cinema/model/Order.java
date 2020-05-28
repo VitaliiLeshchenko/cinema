@@ -9,9 +9,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
-public class Orders {
+@Table(name = "orders")
+public class Order {
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,10 +23,10 @@ public class Orders {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    public Orders() {
+    public Order() {
     }
 
-    public Orders(List<Ticket> tickets, LocalDateTime orderDate, User user) {
+    public Order(List<Ticket> tickets, LocalDateTime orderDate, User user) {
         this.tickets = tickets;
         this.orderDate = orderDate;
         this.user = user;
@@ -64,7 +66,7 @@ public class Orders {
 
     @Override
     public String toString() {
-        return "Orders{id=" + id + ", tickets=" + tickets.size()
-                + ", orderDate=" + orderDate + ", user=" + user + '}';
+        return "Order{id=" + id + ", tickets=" + tickets.size()
+                + ", orderDate=" + orderDate + '}';
     }
 }

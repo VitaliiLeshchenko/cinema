@@ -1,12 +1,13 @@
 package cinema.service.impl;
 
 import cinema.dao.OrderDao;
-import cinema.model.Orders;
+import cinema.model.Order;
 import cinema.model.Ticket;
 import cinema.model.User;
 import cinema.service.OrderService;
 import cinema.service.Service;
 import cinema.util.Inject;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -15,12 +16,12 @@ public class OrderServiceImpl implements OrderService {
     private OrderDao orderDao;
 
     @Override
-    public Orders completeOrder(List<Ticket> tickets, User user) {
-        return orderDao.add(tickets, user);
+    public Order completeOrder(List<Ticket> tickets, User user) {
+        return orderDao.add(new Order(tickets, LocalDateTime.now(), user));
     }
 
     @Override
-    public List<Orders> getOrderHistory(User user) {
-        return orderDao.getByUSer(user);
+    public List<Order> getOrderHistory(User user) {
+        return orderDao.getByUser(user);
     }
 }

@@ -1,12 +1,11 @@
 package cinema.dao;
 
-import cinema.model.Orders;
-import cinema.model.Ticket;
+import cinema.model.Order;
 import cinema.model.User;
 import java.util.List;
 
 public interface OrderDao {
-    Orders add(List<Ticket> tickets, User user);
+    Order add(Order order);
 
-    List<Orders> getByUSer(User user);
+    List<Order> getByUser(User user);
 }
