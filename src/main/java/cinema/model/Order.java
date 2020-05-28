@@ -66,7 +66,8 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{id=" + id + ", tickets=" + tickets.size()
+        return "Order{id = " + id + ", tickets = " + tickets
+                + "user : " + user
                 + ", orderDate=" + orderDate + '}';
     }
 }

@@ -53,7 +53,7 @@ public class ShoppingCart {
 
     @Override
     public String toString() {
-        return "ShoppingCart{id = " + id + ", tickets = " + tickets.size()
+        return "ShoppingCart{id = " + id + ", tickets = " + tickets
                 + ", user = " + user + '}';
     }
 }
