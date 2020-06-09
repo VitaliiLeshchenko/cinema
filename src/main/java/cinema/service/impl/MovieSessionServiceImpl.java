@@ -3,14 +3,14 @@ package cinema.service.impl;
 import cinema.dao.MovieSessionDao;
 import cinema.model.MovieSession;
 import cinema.service.MovieSessionService;
-import cinema.service.Service;
-import cinema.util.Inject;
 import java.time.LocalDate;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class MovieSessionServiceImpl implements MovieSessionService {
-    @Inject
+    @Autowired
     private MovieSessionDao movieSessionDao;
 
     @Override

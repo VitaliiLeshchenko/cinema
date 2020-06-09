@@ -1,5 +1,6 @@
 package cinema;
 
+import cinema.config.AppConfig;
 import cinema.exception.AuthenticationException;
 import cinema.model.CinemaHall;
 import cinema.model.Movie;
@@ -12,14 +13,15 @@ import cinema.service.MovieService;
 import cinema.service.MovieSessionService;
 import cinema.service.OrderService;
 import cinema.service.ShoppingCartService;
-import cinema.util.Injector;
 import java.time.LocalDateTime;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main {
-    private static final Injector INJECTOR = Injector.getInstance("cinema");
 
     public static void main(String[] args) throws AuthenticationException {
-        MovieService movieService = (MovieService) INJECTOR.getInstance(MovieService.class);
+        AnnotationConfigApplicationContext context
+                = new AnnotationConfigApplicationContext(AppConfig.class);
+        MovieService movieService = context.getBean(MovieService.class);
         Movie movie1 = new Movie();
         movie1.setTitle("Terminator");
         movie1.setDescription("Film about machineLearning");
@@ -36,7 +38,7 @@ public class Main {
         cinemaHall1.setCapacity(20);
         cinemaHall1.setDescription("Small hall");
         CinemaHallService cinemaHallService
-                = (CinemaHallService) INJECTOR.getInstance(CinemaHallService.class);
+                = context.getBean(CinemaHallService.class);
         cinemaHall1 = cinemaHallService.add(cinemaHall1);
         CinemaHall cinemaHall2 = new CinemaHall();
         cinemaHall2.setCapacity(200);
@@ -52,7 +54,7 @@ public class Main {
         LocalDateTime time4 = LocalDateTime.of(9999, 5,21,17,30);
 
         MovieSessionService movieSessionService
-                = (MovieSessionService) INJECTOR.getInstance(MovieSessionService.class);
+                = context.getBean(MovieSessionService.class);
         MovieSession movieSession1 = movieSessionService.add(
                 new MovieSession(movie1, cinemaHall1, time1));
         MovieSession movieSession2 = movieSessionService.add(
@@ -71,11 +73,11 @@ public class Main {
         System.out.println("---------******************---------");
 
         AuthenticationService authenticationService
-                = (AuthenticationService) INJECTOR.getInstance(AuthenticationService.class);
+                = context.getBean(AuthenticationService.class);
         User user1 = authenticationService.register("1234@gmail.com", "password");
 
         ShoppingCartService scService
-                = (ShoppingCartService) INJECTOR.getInstance(ShoppingCartService.class);
+                = context.getBean(ShoppingCartService.class);
         scService.registerNewShoppingCart(user1);
         scService.addSession(movieSessionService.add(
                 new MovieSession(movie1, cinemaHall1, time1)), user1);
@@ -89,9 +91,8 @@ public class Main {
         ShoppingCart shoppingCart = scService.getByUser(user2);
         System.out.println(shoppingCart);
         System.out.println("_________________________*** HW_27.4 ***_________________________");
-        OrderService orderService = (OrderService) INJECTOR.getInstance(OrderService.class);
+        OrderService orderService = context.getBean(OrderService.class);
         orderService.completeOrder(shoppingCart.getTickets(), user2);
         orderService.getOrderHistory(user2).forEach(System.out::println);
-
     }
 }

@@ -3,14 +3,14 @@ package cinema.service.impl;
 import cinema.exception.AuthenticationException;
 import cinema.model.User;
 import cinema.service.AuthenticationService;
-import cinema.service.Service;
 import cinema.service.UserService;
 import cinema.util.HashUtil;
-import cinema.util.Inject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
-    @Inject
+    @Autowired
     private UserService userService;
 
     @Override
