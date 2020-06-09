@@ -17,7 +17,7 @@ public class MovieDaoImpl implements MovieDao {
     private static final Logger LOGGER = Logger.getLogger(MovieDaoImpl.class);
 
     @Autowired
-    SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     @Override
     public Movie add(Movie movie) {
