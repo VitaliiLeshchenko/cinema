@@ -5,14 +5,14 @@ import cinema.model.Order;
 import cinema.model.Ticket;
 import cinema.model.User;
 import cinema.service.OrderService;
-import cinema.service.Service;
-import cinema.util.Inject;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-    @Inject
+    @Autowired
     private OrderDao orderDao;
 
     @Override

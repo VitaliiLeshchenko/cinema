@@ -1,10 +1,8 @@
 package cinema.dao.impl;
 
-import cinema.dao.Dao;
 import cinema.dao.MovieSessionDao;
 import cinema.exception.DataProcessingException;
 import cinema.model.MovieSession;
-import cinema.util.HibernateUtil;
 import java.time.LocalDate;
 import java.util.List;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -13,16 +11,23 @@ import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
-@Dao
+@Repository
 public class MovieSessionDaoImpl implements MovieSessionDao {
+
+    @Autowired
+    private SessionFactory sessionFactory;
+
     @Override
     public MovieSession add(MovieSession movieSession) {
         Session session = null;
         Transaction transaction = null;
         try {
-            session = HibernateUtil.getSessionFactory().openSession();
+            session = sessionFactory.openSession();
             transaction = session.beginTransaction();
             movieSession.setId((Long) session.save(movieSession));
             transaction.commit();
@@ -41,7 +46,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
 
     @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
             CriteriaQuery<MovieSession> criteriaQuery = criteriaBuilder
                     .createQuery(MovieSession.class);

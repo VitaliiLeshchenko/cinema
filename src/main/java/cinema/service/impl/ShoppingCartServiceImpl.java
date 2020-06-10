@@ -6,17 +6,17 @@ import cinema.model.MovieSession;
 import cinema.model.ShoppingCart;
 import cinema.model.Ticket;
 import cinema.model.User;
-import cinema.service.Service;
 import cinema.service.ShoppingCartService;
-import cinema.util.Inject;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
-    @Inject
+    @Autowired
     private ShoppingCartDao shoppingCartDao;
 
-    @Inject
+    @Autowired
     private TicketDao ticketDao;
 
     @Override
