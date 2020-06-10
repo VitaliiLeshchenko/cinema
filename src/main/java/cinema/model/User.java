@@ -1,5 +1,7 @@
 package cinema.model;
 
+import java.util.Arrays;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -59,5 +61,27 @@ public class User {
 
     public String toString() {
         return email + " " + id;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof User)) {
+            return false;
+        }
+        User user = (User) o;
+        return Objects.equals(id, user.id)
+                && email.equals(user.email)
+                && password.equals(user.password)
+                && Arrays.equals(salt, user.salt);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(id, email, password);
+        result = 31 * result + Arrays.hashCode(salt);
+        return result;
     }
 }
