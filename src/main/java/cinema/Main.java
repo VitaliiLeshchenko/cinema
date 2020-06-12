@@ -94,5 +94,8 @@ public class Main {
         OrderService orderService = context.getBean(OrderService.class);
         orderService.completeOrder(shoppingCart.getTickets(), user2);
         orderService.getOrderHistory(user2).forEach(System.out::println);
+
+        System.out.println(movieSessionService.getById(1L));
+        System.out.println(movieSessionService.getById(2L));
     }
 }

@@ -1,13 +1,16 @@
 package cinema.dao.impl;
 
 import cinema.dao.CinemaHallDao;
+import cinema.dao.GenericDao;
 import cinema.exception.DataProcessingException;
 import cinema.model.CinemaHall;
 import java.util.List;
 import javax.persistence.criteria.CriteriaQuery;
+import cinema.model.Movie;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -48,6 +51,18 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
             return session.createQuery(criteriaQuery).getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get all CinemaHalls", e);
+        }
+    }
+
+    @Override
+    public CinemaHall getById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<CinemaHall> query = session.createQuery(
+                    "FROM CinemaHall WHERE id = :id", CinemaHall.class);
+            query.setParameter("id", id);
+            return query.getSingleResult();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't find cinemaHall with id: " + id, e);
         }
     }
 }
