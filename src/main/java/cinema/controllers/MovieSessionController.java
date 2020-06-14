@@ -1,14 +1,13 @@
 package cinema.controllers;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.stream.Collectors;
-import cinema.model.MovieSession;
 import cinema.model.dto.MovieSessionMapper;
 import cinema.model.dto.MovieSessionRequestDto;
 import cinema.model.dto.MovieSessionResponseDto;
 import cinema.service.MovieSessionService;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

@@ -10,28 +10,34 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 public class UserDaoTest {
 
-    static AnnotationConfigApplicationContext context
+    private static final AnnotationConfigApplicationContext CONTEXT
             = new AnnotationConfigApplicationContext(AppConfigTest2.class);
+    private static final UserDao USER_DAO = CONTEXT.getBean(UserDao.class);
+
     @Test
     public void getUserDaoImplFromContext(){
-        context.getBean(UserDao.class);
+        CONTEXT.getBean(UserDao.class);
     }
 
     @Test
     public void addAndFindUser(){
-        UserDao userDao = context.getBean(UserDao.class);
         User userAdded = new User("Email", "Password");
-        userAdded = userDao.add(userAdded);
-        User userFromDB = userDao.findByEmail("Email");
+        userAdded = USER_DAO.add(userAdded);
+        User userFromDB = USER_DAO.findByEmail("Email");
         Assert.assertEquals(userAdded, userFromDB);
     }
 
     @Test(expected = DataProcessingException.class)
-    public void expectedEx() {
+    public void addSameUser() {
         User user1 = new User("123", "123");
         User user2 = new User("123", "123");
-        UserDao userDao = context.getBean(UserDao.class);
-        userDao.add(user1);
-        userDao.add(user2);
+        USER_DAO.add(user1);
+        USER_DAO.add(user2);
+    }
+
+    @Test
+    public void adEmptyUser() {
+        User user = new User();
+        USER_DAO.add(user);
     }
 }

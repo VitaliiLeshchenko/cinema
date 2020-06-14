@@ -10,7 +10,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import cinema.model.Order;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -75,7 +74,7 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             query.setParameter("id", id);
             return query.getSingleResult();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't find movieSession by id : " + id , e);
+            throw new DataProcessingException("Can't find movieSession by id : " + id, e);
         }
     }
 }

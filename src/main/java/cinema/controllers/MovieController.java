@@ -1,13 +1,11 @@
 package cinema.controllers;
 
-import java.util.List;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
-import cinema.model.Movie;
 import cinema.model.dto.MovieMapper;
 import cinema.model.dto.MovieRequestDto;
 import cinema.model.dto.MovieResponseDto;
 import cinema.service.MovieService;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;

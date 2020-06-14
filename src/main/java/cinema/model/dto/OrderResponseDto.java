@@ -1,8 +1,8 @@
 package cinema.model.dto;
 
+import cinema.model.Ticket;
 import java.time.LocalDateTime;
 import java.util.List;
-import cinema.model.Ticket;
 
 public class OrderResponseDto {
     private Long id;

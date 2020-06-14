@@ -1,6 +1,5 @@
 package cinema.model.dto;
 
-import java.time.LocalDateTime;
 import cinema.model.MovieSession;
 import cinema.service.CinemaHallService;
 import cinema.service.MovieService;
