@@ -25,7 +25,7 @@ public class MovieSessionController {
     @Autowired
     private MovieSessionService movieSessionService;
 
-    @PostMapping("/add")
+    @PostMapping
     public void addMovieSession(@RequestBody MovieSessionRequestDto movieSessionRequestDto) {
         movieSessionService.add(movieSessionMapper
                 .getMovieSession(movieSessionRequestDto));

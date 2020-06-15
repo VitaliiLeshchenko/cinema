@@ -23,7 +23,7 @@ public class MovieController {
     @Autowired
     private MovieMapper movieMapper;
 
-    @PostMapping("/add")
+    @PostMapping
     public void add(@RequestBody MovieRequestDto dto) {
         movieService.add(movieMapper.getMovie(dto));
     }
