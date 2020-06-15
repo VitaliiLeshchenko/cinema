@@ -20,4 +20,9 @@ public class UserServiceImpl implements UserService {
     public User findByEmail(String email) {
         return userDao.findByEmail(email);
     }
+
+    @Override
+    public User getById(Long id) {
+        return userDao.getById(id);
+    }
 }

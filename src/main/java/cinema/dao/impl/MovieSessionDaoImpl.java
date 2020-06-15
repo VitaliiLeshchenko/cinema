@@ -13,6 +13,7 @@ import javax.persistence.criteria.Root;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -60,6 +61,20 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             return session.createQuery(criteriaQuery).getResultList();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get all movieSessions", e);
+        }
+    }
+
+    @Override
+    public MovieSession getById(Long id) {
+        try (Session session = sessionFactory.openSession()) {
+            Query<MovieSession> query = session.createQuery("SELECT m FROM MovieSession m "
+                    + "JOIN FETCH m.cinemaHall "
+                    + "JOIN FETCH m.movie "
+                    + "WHERE m.id = :id", MovieSession.class);
+            query.setParameter("id", id);
+            return query.getSingleResult();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't find movieSession by id : " + id, e);
         }
     }
 }
