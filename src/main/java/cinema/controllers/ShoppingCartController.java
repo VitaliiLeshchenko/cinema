@@ -9,16 +9,18 @@ import cinema.model.dto.ShoppingCartResponseDto;
 import cinema.service.MovieSessionService;
 import cinema.service.ShoppingCartService;
 import cinema.service.UserService;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/shoppingcarts")
+@RequestMapping("/shopping-carts")
 public class ShoppingCartController {
 
     @Autowired
@@ -33,17 +35,18 @@ public class ShoppingCartController {
     @Autowired
     private ShoppingCartService shoppingCartService;
 
-    @PostMapping("/addmoviesession")
-    public void addMovieSessionInCart(@RequestBody ShoppingCartRequestDto cartRequestDto) {
+    @PostMapping("/add-movie-session")
+    public void addMovieSessionInCart(@RequestBody @Valid ShoppingCartRequestDto cartRequestDto) {
         MovieSession movieSession = movieSessionService.getById(cartRequestDto.getSessionId());
         User user = userService.getById(cartRequestDto.getUserId());
         shoppingCartService.addSession(movieSession, user);
     }
 
-    @GetMapping("/byuser")
-    public ShoppingCartResponseDto getShoppingCartByUserId(
-            @RequestParam(name = "userId") Long userId) {
-        ShoppingCart shoppingCart = shoppingCartService.getByUser(userService.getById(userId));
+    @GetMapping("/by-user")
+    public ShoppingCartResponseDto getShoppingCartByUserId(Authentication authentication) {
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        User user = userService.findByEmail(userDetails.getUsername());
+        ShoppingCart shoppingCart = shoppingCartService.getByUser(user);
         return shoppingCartMapper.getShoppingCartResponseDto(shoppingCart);
     }
 }

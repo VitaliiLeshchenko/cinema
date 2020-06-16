@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/moviesessions")
+@RequestMapping("/movie-sessions")
 public class MovieSessionController {
     @Autowired
     private MovieSessionMapper movieSessionMapper;
@@ -26,7 +27,7 @@ public class MovieSessionController {
     private MovieSessionService movieSessionService;
 
     @PostMapping
-    public void addMovieSession(@RequestBody MovieSessionRequestDto movieSessionRequestDto) {
+    public void addMovieSession(@RequestBody @Valid MovieSessionRequestDto movieSessionRequestDto) {
         movieSessionService.add(movieSessionMapper
                 .getMovieSession(movieSessionRequestDto));
     }
