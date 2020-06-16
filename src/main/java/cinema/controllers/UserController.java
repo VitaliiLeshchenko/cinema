@@ -16,7 +16,7 @@ public class UserController {
     @Autowired
     private UserMapper userMapper;
 
-    @PostMapping("/byemail")
+    @PostMapping("/by-email")
     public UserResponseDto getByEmail(@RequestBody UserRequestDto dto) {
         return userMapper.getUserResponseDto(dto);
     }
