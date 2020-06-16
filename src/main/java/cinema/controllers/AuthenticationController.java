@@ -1,10 +1,11 @@
 package cinema.controllers;
 
 import cinema.model.User;
-import cinema.model.dto.UserRequestDto;
+import cinema.model.dto.UserRegistrationDto;
 import cinema.service.AuthenticationService;
 import cinema.service.ShoppingCartService;
 import cinema.service.UserService;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +26,7 @@ public class AuthenticationController {
     private ShoppingCartService shoppingCartService;
 
     @PostMapping("/register")
-    public void registerUser(@RequestBody UserRequestDto dto) {
+    public void registerUser(@RequestBody @Valid UserRegistrationDto dto) {
         User user = authenticationService.register(dto.getEmail(), dto.getPassword());
         shoppingCartService.registerNewShoppingCart(user);
     }

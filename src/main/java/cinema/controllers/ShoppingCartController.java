@@ -9,6 +9,7 @@ import cinema.model.dto.ShoppingCartResponseDto;
 import cinema.service.MovieSessionService;
 import cinema.service.ShoppingCartService;
 import cinema.service.UserService;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +35,7 @@ public class ShoppingCartController {
     private ShoppingCartService shoppingCartService;
 
     @PostMapping("/add-movie-session")
-    public void addMovieSessionInCart(@RequestBody ShoppingCartRequestDto cartRequestDto) {
+    public void addMovieSessionInCart(@RequestBody @Valid ShoppingCartRequestDto cartRequestDto) {
         MovieSession movieSession = movieSessionService.getById(cartRequestDto.getSessionId());
         User user = userService.getById(cartRequestDto.getUserId());
         shoppingCartService.addSession(movieSession, user);

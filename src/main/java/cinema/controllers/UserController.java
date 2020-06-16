@@ -3,6 +3,7 @@ package cinema.controllers;
 import cinema.model.dto.UserMapper;
 import cinema.model.dto.UserRequestDto;
 import cinema.model.dto.UserResponseDto;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +18,7 @@ public class UserController {
     private UserMapper userMapper;
 
     @PostMapping("/by-email")
-    public UserResponseDto getByEmail(@RequestBody UserRequestDto dto) {
+    public UserResponseDto getByEmail(@RequestBody @Valid UserRequestDto dto) {
         return userMapper.getUserResponseDto(dto);
     }
 }
