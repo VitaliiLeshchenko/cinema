@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,10 +44,10 @@ public class OrderController {
 
     @GetMapping
     public List<OrderResponseDto> getOrderHistory(Authentication authentication) {
-//        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
-//        Long userId = userService.findByEmail(userDetails.getUsername()).getId();
-//        todo
-//        here we pick userDetails from "inMemoryAuthentication" but that user is not registered yet
+        //UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        //Long userId = userService.findByEmail(userDetails.getUsername()).getId();
+        //todo
+        //here we pick userDetails from "inMemoryAuthentication" but that user is not registered yet
         Long userId = 1L;
         return orderService.getOrderHistory(userService.getById(userId))
                 .stream()
