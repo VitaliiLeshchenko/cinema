@@ -11,11 +11,12 @@ import cinema.service.ShoppingCartService;
 import cinema.service.UserService;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -42,8 +43,12 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/by-user")
-    public ShoppingCartResponseDto getShoppingCartByUserId(
-            @RequestParam(name = "userId") Long userId) {
+    public ShoppingCartResponseDto getShoppingCartByUserId(Authentication authentication) {
+//        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+//        Long userId = userService.findByEmail(userDetails.getUsername()).getId();
+//        todo
+//        here we pick userDetails from "inMemoryAuthentication" but that user is not registered yet
+        Long userId = 1L;
         ShoppingCart shoppingCart = shoppingCartService.getByUser(userService.getById(userId));
         return shoppingCartMapper.getShoppingCartResponseDto(shoppingCart);
     }
