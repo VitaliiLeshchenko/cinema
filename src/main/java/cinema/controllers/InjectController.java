@@ -2,7 +2,6 @@ package cinema.controllers;
 
 import cinema.model.Role;
 import cinema.model.User;
-import cinema.service.AuthenticationService;
 import cinema.service.RoleService;
 import cinema.service.UserService;
 import java.util.Collections;

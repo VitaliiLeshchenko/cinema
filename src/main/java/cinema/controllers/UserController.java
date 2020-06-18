@@ -1,8 +1,8 @@
 package cinema.controllers;
 
-import cinema.model.dto.mapper.UserMapper;
 import cinema.model.dto.UserRequestDto;
 import cinema.model.dto.UserResponseDto;
+import cinema.model.dto.mapper.UserMapper;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;

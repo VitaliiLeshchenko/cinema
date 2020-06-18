@@ -1,6 +1,5 @@
 package cinema.service.impl;
 
-import cinema.dao.ShoppingCartDao;
 import cinema.dao.UserDao;
 import cinema.model.User;
 import cinema.service.ShoppingCartService;

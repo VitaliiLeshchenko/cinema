@@ -1,8 +1,8 @@
 package cinema.controllers;
 
-import cinema.model.dto.mapper.MovieMapper;
 import cinema.model.dto.MovieRequestDto;
 import cinema.model.dto.MovieResponseDto;
+import cinema.model.dto.mapper.MovieMapper;
 import cinema.service.MovieService;
 import java.util.List;
 import java.util.stream.Collectors;
