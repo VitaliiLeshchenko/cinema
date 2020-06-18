@@ -1,12 +1,14 @@
 package cinema.model;
 
-import java.util.Arrays;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public class User {
@@ -16,15 +18,24 @@ public class User {
     @Column(unique = true)
     private String email;
     private String password;
-    private byte[] salt;
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<Role> roles;
+
+    public User() {
+
+    }
 
     public User(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
-    public User() {
+    public Set<Role> getRoles() {
+        return roles;
+    }
 
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 
     public Long getId() {
@@ -51,14 +62,6 @@ public class User {
         this.password = password;
     }
 
-    public byte[] getSalt() {
-        return salt;
-    }
-
-    public void setSalt(byte[] salt) {
-        this.salt = salt;
-    }
-
     public String toString() {
         return email + " " + id;
     }
@@ -74,14 +77,13 @@ public class User {
         User user = (User) o;
         return Objects.equals(id, user.id)
                 && email.equals(user.email)
-                && password.equals(user.password)
-                && Arrays.equals(salt, user.salt);
+                && password.equals(user.password);
     }
 
     @Override
     public int hashCode() {
         int result = Objects.hash(id, email, password);
-        result = 31 * result + Arrays.hashCode(salt);
+        result = 31 * result;
         return result;
     }
 }
