@@ -3,7 +3,7 @@ package cinema.controllers;
 import cinema.model.MovieSession;
 import cinema.model.ShoppingCart;
 import cinema.model.User;
-import cinema.model.dto.ShoppingCartMapper;
+import cinema.model.dto.mapper.ShoppingCartMapper;
 import cinema.model.dto.ShoppingCartRequestDto;
 import cinema.model.dto.ShoppingCartResponseDto;
 import cinema.service.MovieSessionService;
@@ -22,16 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/shopping-carts")
 public class ShoppingCartController {
-
     @Autowired
     private UserService userService;
-
     @Autowired
     private ShoppingCartMapper shoppingCartMapper;
-
     @Autowired
     private MovieSessionService movieSessionService;
-
     @Autowired
     private ShoppingCartService shoppingCartService;
 

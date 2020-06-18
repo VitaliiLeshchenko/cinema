@@ -1,5 +1,6 @@
 package cinema.service.impl;
 
+import cinema.dao.ShoppingCartDao;
 import cinema.dao.UserDao;
 import cinema.model.User;
 import cinema.service.ShoppingCartService;
@@ -12,10 +13,8 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserDao userDao;
-
     @Autowired
     private PasswordEncoder encoder;
-
     @Autowired
     private ShoppingCartService shoppingCartService;
 

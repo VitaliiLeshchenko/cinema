@@ -1,6 +1,8 @@
-package cinema.model.dto;
+package cinema.model.dto.mapper;
 
 import cinema.model.User;
+import cinema.model.dto.UserRequestDto;
+import cinema.model.dto.UserResponseDto;
 import cinema.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

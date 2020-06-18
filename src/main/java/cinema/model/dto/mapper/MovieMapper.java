@@ -1,6 +1,8 @@
-package cinema.model.dto;
+package cinema.model.dto.mapper;
 
 import cinema.model.Movie;
+import cinema.model.dto.MovieRequestDto;
+import cinema.model.dto.MovieResponseDto;
 import org.springframework.stereotype.Component;
 
 @Component

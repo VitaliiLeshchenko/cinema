@@ -1,6 +1,6 @@
 package cinema.controllers;
 
-import cinema.model.dto.MovieMapper;
+import cinema.model.dto.mapper.MovieMapper;
 import cinema.model.dto.MovieRequestDto;
 import cinema.model.dto.MovieResponseDto;
 import cinema.service.MovieService;
@@ -17,10 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/movies")
 public class MovieController {
-
     @Autowired
     private MovieService movieService;
-
     @Autowired
     private MovieMapper movieMapper;
 

@@ -16,12 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class InjectController {
     @Autowired
     private RoleService roleService;
-
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private AuthenticationService authenticationService;
 
     @GetMapping
     public String injectData() {

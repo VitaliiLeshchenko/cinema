@@ -1,6 +1,7 @@
-package cinema.model.dto;
+package cinema.model.dto.mapper;
 
 import cinema.model.Order;
+import cinema.model.dto.OrderResponseDto;
 import org.springframework.stereotype.Component;
 
 @Component

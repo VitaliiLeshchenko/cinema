@@ -1,6 +1,6 @@
 package cinema.controllers;
 
-import cinema.model.dto.UserMapper;
+import cinema.model.dto.mapper.UserMapper;
 import cinema.model.dto.UserRequestDto;
 import cinema.model.dto.UserResponseDto;
 import javax.validation.Valid;
@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-
     @Autowired
     private UserMapper userMapper;
 
