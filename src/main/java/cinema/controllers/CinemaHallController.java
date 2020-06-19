@@ -1,8 +1,8 @@
 package cinema.controllers;
 
-import cinema.model.dto.CinemaHallMapper;
 import cinema.model.dto.CinemaHallRequestDto;
 import cinema.model.dto.CinemaHallResponseDto;
+import cinema.model.dto.mapper.CinemaHallMapper;
 import cinema.service.CinemaHallService;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class CinemaHallController {
     @Autowired
     private CinemaHallService cinemaHallService;
-
     @Autowired
     private CinemaHallMapper cinemaHallMapper;
 

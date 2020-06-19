@@ -1,6 +1,8 @@
-package cinema.model.dto;
+package cinema.model.dto.mapper;
 
 import cinema.model.MovieSession;
+import cinema.model.dto.MovieSessionRequestDto;
+import cinema.model.dto.MovieSessionResponseDto;
 import cinema.service.CinemaHallService;
 import cinema.service.MovieService;
 import org.springframework.beans.factory.annotation.Autowired;
