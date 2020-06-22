@@ -7,20 +7,19 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class RoleDaoImpl implements RoleDao {
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
-    @Override
+    public RoleDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     public Role add(Role role) {
         Transaction transaction = null;
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             session.save(role);
             transaction.commit();
@@ -30,14 +29,9 @@ public class RoleDaoImpl implements RoleDao {
                 transaction.rollback();
             }
             throw new DataProcessingException("Can't insert Role entity", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 
-    @Override
     public Role getRoleByName(String roleName) {
         try (Session session = sessionFactory.openSession()) {
             String hql = "FROM Role R WHERE R.roleName = :roleName";

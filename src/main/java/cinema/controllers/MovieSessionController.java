@@ -9,7 +9,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,10 +19,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/movie-sessions")
 public class MovieSessionController {
-    @Autowired
-    private MovieSessionMapper movieSessionMapper;
-    @Autowired
-    private MovieSessionService movieSessionService;
+    private final MovieSessionMapper movieSessionMapper;
+    private final MovieSessionService movieSessionService;
+
+    public MovieSessionController(MovieSessionMapper movieSessionMapper,
+                                  MovieSessionService movieSessionService) {
+        this.movieSessionMapper = movieSessionMapper;
+        this.movieSessionService = movieSessionService;
+    }
 
     @PostMapping
     public void addMovieSession(@RequestBody @Valid MovieSessionRequestDto movieSessionRequestDto) {

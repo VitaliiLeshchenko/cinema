@@ -14,20 +14,19 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class MovieSessionDaoImpl implements MovieSessionDao {
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
-    @Override
+    public MovieSessionDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     public MovieSession add(MovieSession movieSession) {
-        Session session = null;
         Transaction transaction = null;
-        try {
-            session = sessionFactory.openSession();
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             movieSession.setId((Long) session.save(movieSession));
             transaction.commit();
@@ -36,15 +35,10 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
                 transaction.rollback();
             }
             throw new DataProcessingException("Can't create MovieSession: " + movieSession, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
         return movieSession;
     }
 
-    @Override
     public List<MovieSession> findAvailableSessions(Long movieId, LocalDate date) {
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder criteriaBuilder = session.getCriteriaBuilder();
@@ -63,7 +57,6 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
         }
     }
 
-    @Override
     public MovieSession getById(Long id) {
         try (Session session = sessionFactory.openSession()) {
             Query<MovieSession> query = session.createQuery("SELECT m FROM MovieSession m "
@@ -74,6 +67,16 @@ public class MovieSessionDaoImpl implements MovieSessionDao {
             return query.getSingleResult();
         } catch (Exception e) {
             throw new DataProcessingException("Can't find movieSession by id : " + id, e);
+        }
+    }
+
+    public List<MovieSession> getAll() {
+        try (Session session = sessionFactory.openSession()) {
+            Query<MovieSession> query = session.createQuery("FROM MovieSession",
+                    MovieSession.class);
+            return query.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't find movieSessions at all", e);
         }
     }
 }

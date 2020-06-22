@@ -8,20 +8,19 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class ShoppingCartDaoImpl implements ShoppingCartDao {
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
-    @Override
+    public ShoppingCartDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     public ShoppingCart add(ShoppingCart shoppingCart) {
-        Session session = null;
         Transaction transaction = null;
-        try {
-            session = sessionFactory.openSession();
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             session.save(shoppingCart);
             transaction.commit();
@@ -30,15 +29,10 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
                 transaction.rollback();
             }
             throw new DataProcessingException("Can't save shoppingCart : " + shoppingCart, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
         return shoppingCart;
     }
 
-    @Override
     public ShoppingCart getByUser(User user) {
         try (Session session = sessionFactory.openSession()) {
             Query<ShoppingCart> query = session.createQuery(
@@ -50,19 +44,15 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
                             + "LEFT JOIN FETCH t.user u "
                             + "where sc.user.id = :userId", ShoppingCart.class);
             query.setParameter("userId", user.getId());
-            ShoppingCart shoppingCart = query.getSingleResult();
-            return shoppingCart;
+            return query.getSingleResult();
         } catch (Exception e) {
             throw new DataProcessingException("Can't get shoppingCart by User", e);
         }
     }
 
-    @Override
     public void update(ShoppingCart shoppingCart) {
-        Session session = null;
         Transaction transaction = null;
-        try {
-            session = sessionFactory.openSession();
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             session.update(shoppingCart);
             transaction.commit();
@@ -71,10 +61,6 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
                 transaction.rollback();
             }
             throw new DataProcessingException("Can't update shoppingCart : " + shoppingCart, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
     }
 }

@@ -3,24 +3,24 @@ package cinema.dao.impl;
 import cinema.dao.UserDao;
 import cinema.exception.DataProcessingException;
 import cinema.model.User;
+import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserDaoImpl implements UserDao {
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
-    @Override
+    public UserDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     public User add(User user) {
-        Session session = null;
         Transaction transaction = null;
-        try {
-            session = sessionFactory.openSession();
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             user.setId((Long) session.save(user));
             transaction.commit();
@@ -29,15 +29,10 @@ public class UserDaoImpl implements UserDao {
                 transaction.rollback();
             }
             throw new DataProcessingException("Can't create user : " + user, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
         return user;
     }
 
-    @Override
     public User findByEmail(String email) {
         try (Session session = sessionFactory.openSession()) {
             Query<User> query = session.createQuery("FROM User WHERE email = :email", User.class);
@@ -48,7 +43,6 @@ public class UserDaoImpl implements UserDao {
         }
     }
 
-    @Override
     public User getById(Long id) {
         try (Session session = sessionFactory.openSession()) {
             Query<User> query = session.createQuery("FROM User WHERE id = :id", User.class);
@@ -56,6 +50,15 @@ public class UserDaoImpl implements UserDao {
             return query.uniqueResult();
         } catch (Exception e) {
             throw new DataProcessingException("Can't find user with id :" + id, e);
+        }
+    }
+
+    public List<User> getAll() {
+        try (Session session = sessionFactory.openSession()) {
+            Query<User> query = session.createQuery("FROM User", User.class);
+            return query.getResultList();
+        } catch (Exception e) {
+            throw new DataProcessingException("Can't find users at all", e);
         }
     }
 }

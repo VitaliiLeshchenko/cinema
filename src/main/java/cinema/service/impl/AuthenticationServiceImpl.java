@@ -1,19 +1,27 @@
 package cinema.service.impl;
 
 import cinema.exception.AuthenticationException;
+import cinema.model.Role;
 import cinema.model.User;
 import cinema.service.AuthenticationService;
+import cinema.service.RoleService;
 import cinema.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.Set;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+    private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
+    private final RoleService roleService;
+
+    public AuthenticationServiceImpl(UserService userService,
+                                     PasswordEncoder passwordEncoder, RoleService roleService) {
+        this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
+        this.roleService = roleService;
+    }
 
     @Override
     public User login(String email, String password) throws AuthenticationException {
@@ -30,6 +38,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         User user = new User();
         user.setPassword(password);
         user.setEmail(email);
+        Role userRole = roleService.getRoleByName("USER");
+        user.setRoles(Set.of(userRole));
         user = userService.add(user);
         return user;
     }
