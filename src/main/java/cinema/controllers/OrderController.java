@@ -11,7 +11,6 @@ import cinema.service.UserService;
 import java.util.List;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,14 +22,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
-    @Autowired
-    private OrderService orderService;
-    @Autowired
-    private OrderMapper orderMapper;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private ShoppingCartService shoppingCartService;
+    private final OrderService orderService;
+    private final OrderMapper orderMapper;
+    private final UserService userService;
+    private final ShoppingCartService shoppingCartService;
+
+    public OrderController(OrderService orderService, OrderMapper orderMapper,
+                           UserService userService, ShoppingCartService shoppingCartService) {
+        this.orderService = orderService;
+        this.orderMapper = orderMapper;
+        this.userService = userService;
+        this.shoppingCartService = shoppingCartService;
+    }
 
     @PostMapping("/complete")
     public void completeOrder(@RequestBody @Valid OrderRequestDto orderRequestDto) {

@@ -6,20 +6,19 @@ import cinema.model.Ticket;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class TicketDaoImpl implements TicketDao {
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
-    @Override
+    public TicketDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     public Ticket add(Ticket ticket) {
-        Session session = null;
         Transaction transaction = null;
-        try {
-            session = sessionFactory.openSession();
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             session.save(ticket);
             transaction.commit();
@@ -28,10 +27,6 @@ public class TicketDaoImpl implements TicketDao {
                 transaction.rollback();
             }
             throw new DataProcessingException("Can't save ticket : " + ticket, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
         return ticket;
     }

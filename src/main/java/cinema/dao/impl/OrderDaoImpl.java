@@ -9,20 +9,19 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class OrderDaoImpl implements OrderDao {
-    @Autowired
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
-    @Override
+    public OrderDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
+
     public Order add(Order order) {
         Transaction transaction = null;
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             session.save(order);
             transaction.commit();
@@ -31,15 +30,10 @@ public class OrderDaoImpl implements OrderDao {
                 transaction.rollback();
             }
             throw new DataProcessingException("Can't create new order", e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
         return null;
     }
 
-    @Override
     public List<Order> getByUser(User user) {
         try (Session session = sessionFactory.openSession()) {
             Query<Order> query = session.createQuery("SELECT DISTINCT o FROM Order o "

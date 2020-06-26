@@ -9,21 +9,19 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 @Repository
 public class CinemaHallDaoImpl implements CinemaHallDao {
+    private final SessionFactory sessionFactory;
 
-    @Autowired
-    private SessionFactory sessionFactory;
+    public CinemaHallDaoImpl(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
+    }
 
-    @Override
     public CinemaHall add(CinemaHall cinemaHall) {
         Transaction transaction = null;
-        Session session = null;
-        try {
-            session = sessionFactory.openSession();
+        try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
             cinemaHall.setId((Long) session.save(cinemaHall));
             transaction.commit();
@@ -32,15 +30,10 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
                 transaction.rollback();
             }
             throw new DataProcessingException("Can't create CinemaHall: " + cinemaHall, e);
-        } finally {
-            if (session != null) {
-                session.close();
-            }
         }
         return cinemaHall;
     }
 
-    @Override
     public List<CinemaHall> getAll() {
         try (Session session = sessionFactory.openSession()) {
             CriteriaQuery<CinemaHall> criteriaQuery = session
@@ -52,7 +45,6 @@ public class CinemaHallDaoImpl implements CinemaHallDao {
         }
     }
 
-    @Override
     public CinemaHall getById(Long id) {
         try (Session session = sessionFactory.openSession()) {
             Query<CinemaHall> query = session.createQuery(
