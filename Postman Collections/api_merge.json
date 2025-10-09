@@ -100,7 +100,7 @@
 			"response": []
 		},
 		{
-			"name": "Merge processing Copy",
+			"name": "Merge invalid source",
 			"event": [
 				{
 					"listen": "prerequest",
@@ -186,7 +186,8 @@
 							"}"
 						],
 						"type": "text/javascript",
-						"packages": {}
+						"packages": {},
+						"requests": {}
 					}
 				},
 				{
@@ -197,7 +198,8 @@
 							""
 						],
 						"type": "text/javascript",
-						"packages": {}
+						"packages": {},
+						"requests": {}
 					}
 				}
 			],
@@ -215,7 +217,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"phone\": \"38098747\",\n    \"contract_id\": \"013E3DAD-08CC-4336-A3A9-14E31E9911DA\",\n    \"buyer_id\": 1,\n    \"action\": \"merge\",\n    \"date\": \"вставляю динамічно\",\n    \"source\": \"processing\",\n    \"changes\": {\n        \"merge_contract_id\": \"BB32FC12-2BF4-4CD0-A058-50C30180616E\",\n        \"merge_buyer_id\": 2,\n        \"merge_cards\": [\n            \"2910000344630\"\n        ]\n    }\n}"
+					"raw": "{\n    \"phone\": \"38098747\",\n    \"contract_id\": \"013E3DAD-08CC-4336-A3A9-14E31E9911DA\",\n    \"buyer_id\": 1,\n    \"action\": \"merge\",\n    \"date\": \"вставляю динамічно\",\n    \"source\": \"mobapp\",\n    \"changes\": {\n        \"merge_contract_id\": \"BB32FC12-2BF4-4CD0-A058-50C30180616E\",\n        \"merge_buyer_id\": 2,\n        \"merge_cards\": [\n            \"2910000344630\"\n        ]\n    }\n}"
 				},
 				"url": "{{host}}/client"
 			},
