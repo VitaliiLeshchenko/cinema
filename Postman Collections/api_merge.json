@@ -93,7 +93,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"contract_id\": \"-160\",\n    \"buyer_id\": -160,\n    \"phone\": \"\",\n    \"action\": \"merge\",\n    \"date\": \"{{date}}\",\n    \"source\": \"processing\",\n    \"changes\": {\n        \"merge_contract_id\": \"-159\",\n        \"merge_buyer_id\": -159,\n        \"merge_cards\": [\n            \"-159\"\n        ]\n    }\n}"
+					"raw": "{\n    \"contract_id\": \"TEST0000-0000-0000-0000-000000000249\",\n    \"buyer_id\": 160,\n    \"phone\": \"{{phoneTest}}\",\n    \"action\": \"merge\",\n    \"date\": \"{{date}}\",\n    \"source\": \"processing\",\n    \"changes\": {\n        \"merge_contract_id\": \"TEST0000-0000-0000-0000-000000000249\",\n        \"merge_buyer_id\": 159,\n        \"merge_cards\": [\n            \"159\"\n        ]\n    }\n}"
 				},
 				"url": "{{host}}/client"
 			},
