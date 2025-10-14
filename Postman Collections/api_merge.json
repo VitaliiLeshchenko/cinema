@@ -93,7 +93,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"phone\": \"380951632743\",\n    \"contract_id\": \"29E2BADF-A8B5-49AB-9AFA-92C4CB25CA86\",\n    \"buyer_id\": 2890597,\n    \"action\": \"merge\",\n    \"date\": \"2025-10-14 17:57:48.053\",\n    \"source\": \"processing\",\n    \"changes\": {\n        \"merge_contract_id\": \"633C5F8B-0500-4B07-AD8A-543F66BC911A\",\n        \"merge_buyer_id\": 2890598,\n        \"remaining_phone\": \"380952719418\",\n        \"merge_cards\": [\n            \"380000000249\"\n        ]\n    }\n}"
+					"raw": "{\n    \"phone\": \"380951632743\",\n    \"contract_id\": \"TEST0000-0000-0000-0000-{{phoneTest}}\",\n    \"buyer_id\": 2890597,\n    \"action\": \"merge\",\n    \"date\": \"2025-10-14 17:57:48.053\",\n    \"source\": \"processing\",\n    \"changes\": {\n        \"merge_contract_id\": \"633C5F8B-0500-4B07-AD8A-543F66BC911A\",\n        \"merge_buyer_id\": 2890598,\n        \"remaining_phone\": \"380952719418\",\n        \"merge_cards\": [\n            \"380000000249\"\n        ]\n    }\n}"
 				},
 				"url": "{{host}}/client"
 			},
