@@ -169,6 +169,38 @@
 					"script": {
 						"id": "c151578d-1534-4448-814e-05daa769623e",
 						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 300ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(300);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields: error and status\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData).to.have.all.keys('error', 'status');\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Error is an integer\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.error).to.be.a('number').and.to.satisfy(Number.isInteger, \"Error must be an integer\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Status is \\\"Invalid date format. Expected YYYY-MM-DD HH:mm:ss.sss\\\"\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.status).equal('Invalid date format. Expected YYYY-MM-DD HH:mm:ss.sss')\r",
+							"});\r",
 							""
 						],
 						"type": "text/javascript",
@@ -191,7 +223,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"phone\": \"38098747\",\n    \"contract_id\": \"013E3DAD-08CC-4336-A3A9-14E31E9911DA\",\n    \"buyer_id\": 1,\n    \"action\": \"merge\",\n    \"date\": \"{{date}}\",\n    \"source\": \"mobapp\",\n    \"changes\": {\n        \"merge_contract_id\": \"BB32FC12-2BF4-4CD0-A058-50C30180616E\",\n        \"merge_buyer_id\": 2,\n        \"merge_cards\": [\n            \"2910000344630\"\n        ]\n    }\n}"
+					"raw": "{\n    \"phone\": \"38098747\",\n    \"contract_id\": \"013E3DAD-08CC-4336-A3A9-14E31E9911DA\",\n    \"buyer_id\": 1,\n    \"action\": \"merge\",\n    \"date\": \"2025-09-15\",\n    \"source\": \"mobapp\",\n    \"changes\": {\n        \"merge_contract_id\": \"BB32FC12-2BF4-4CD0-A058-50C30180616E\",\n        \"merge_buyer_id\": 2,\n        \"merge_cards\": [\n            \"2910000344630\"\n        ]\n    }\n}"
 				},
 				"url": "{{host}}/client"
 			},
