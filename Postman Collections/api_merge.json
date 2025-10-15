@@ -15,43 +15,13 @@
 						"exec": [
 							"async function main() {\r",
 							"    const evaLibrary = pm.require('@eva-human/eva_library');\r",
-							"    pm.environment.set(\"date\", evaLibrary.getFormattedDate());\r",
-							"\r",
-							"    var env = pm.environment.get(\"env\");\r",
-							"    var config = {\r",
-							"        \"dev\": {\r",
-							"            \"host\": \"https://humanv2-dev.eva.ua\",\r",
-							"            \"shared_keys\": {\r",
-							"                \"processing\": \"yX9Lk3f17TqP9wJb\",\r",
-							"                \"mobapp\":     \"aP7Dn4r56BcE2vUq\",\r",
-							"                \"magento\":    \"hT3Ks2m89LpW0xRf\",\r",
-							"                \"creatio\":    \"zQ1Vv8m45NmY7dEx\",\r",
-							"                \"webpage\":    \"bM9Xs7q18TdJ5wRu\"\r",
-							"            }\r",
-							"        },\r",
-							"        \"prod\": {\r",
-							"            \"host\": \"https://humanv2.eva.ua\",\r",
-							"            \"shared_key\": \"L12uS45119Za65Ej\" // для prod — один ключ\r",
-							"        }\r",
-							"    };\r",
-							"\r",
-							"    var host = config[env].host;\r",
-							"    pm.environment.set(\"host\", host);\r",
-							"\r",
-							"    var requestData = pm.request.body ? JSON.parse(pm.request.body.raw) : {};\r",
-							"    var source = requestData[\"source\"];\r",
-							"\r",
-							"    var sharedKey = \"\";\r",
-							"    if (env === \"dev\") {\r",
-							"        sharedKey = config[env].shared_keys[source];\r",
-							"    } else {\r",
-							"        sharedKey = config[env].shared_key;\r",
-							"    }\r",
-							"    pm.environment.set(\"shared_key\", sharedKey);\r",
-							"\r",
-							"    var requestData = pm.request.body ? JSON.parse(pm.request.body.raw) : {};\r",
-							"    var generatedHash = await evaLibrary.sha256Hex(requestData, sharedKey);\r",
-							"    requestData[\"hash\"] = generatedHash;\r",
+							"    // оновлюю дату\r",
+							"    evaLibrary.updateEnvironmentDate();\r",
+							"    \r",
+							"    var requestData = JSON.parse(pm.request.body.raw);\r",
+							"    // визначаю ключ і host, і оновлюю тіло запиту\r",
+							"    key = evaLibrary.human2getSharedKeyAndSetHostToEnvironment(requestData[\"source\"]);\r",
+							"    requestData[\"hash\"] = await evaLibrary.sha256Hex(requestData, key);\r",
 							"    pm.request.body.update(JSON.stringify(requestData, null, 0));\r",
 							"}\r",
 							"\r",
@@ -93,7 +63,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"phone\": \"{{phoneTest}}\",\n    \"contract_id\": \"FEFE0000-0000-0000-0000-{{phoneTest}}\",\n    \"buyer_id\": -253,\n    \"action\": \"merge\",\n    \"date\": \"{{date}}\",\n    \"source\": \"processing\",\n    \"changes\": {\n        \"merge_contract_id\": \"FEFE0000-0000-0000-0000-380000000253\",\n        \"merge_buyer_id\": -253,\n        \"remaining_phone\": \"380000000253\",\n        \"merge_cards\": [\n            \"380000000253\"\n        ]\n    }\n}"
+					"raw": "{\n    \"phone\": \"{{phoneTest}}\",\n    \"contract_id\": \"FEFE0000-0000-0000-0000-{{phoneTest}}\",\n    \"buyer_id\": 253,\n    \"action\": \"merge\",\n    \"date\": \"{{date}}\",\n    \"source\": \"processing\",\n    \"changes\": {\n        \"merge_contract_id\": \"FEFE0000-0000-0000-0000-380000000253\",\n        \"merge_buyer_id\": 253,\n        \"remaining_phone\": \"380000000253\",\n        \"merge_cards\": [\n            \"380000000253\"\n        ]\n    }\n}"
 				},
 				"url": "{{host}}/client"
 			},
@@ -107,86 +77,26 @@
 					"script": {
 						"id": "eb894a3e-5b66-40f7-b317-28f887fd2d8e",
 						"exec": [
-							"function getFormattedDate() {",
-							"    const now = new Date();",
-							"    now.setHours(now.getHours() + 3);",
-							"    return now.toISOString().replace('T', ' ').replace('Z', '').slice(0, 23);",
-							"}",
-							"",
-							"let body = pm.request.body.raw;",
-							"let jsonData = JSON.parse(body);",
-							"jsonData.date = getFormattedDate();",
-							"pm.request.body.update(JSON.stringify(jsonData));",
-							"",
-							"",
-							"var env = \"dev\";",
-							"",
-							"var config = {",
-							"    \"dev\": {",
-							"        \"host\": \"https://humanv2-dev.eva.ua\",",
-							"        \"shared_keys\": {",
-							"            \"processing\": \"yX9Lk3f17TqP9wJb\",",
-							"            \"mobapp\":     \"aP7Dn4r56BcE2vUq\",",
-							"            \"magento\":    \"hT3Ks2m89LpW0xRf\",",
-							"            \"creatio\":    \"zQ1Vv8m45NmY7dEx\"",
-							"        }",
-							"    },",
-							"    \"prod\": {",
-							"        \"host\": \"https://humanv2.eva.ua\",",
-							"        \"shared_key\": \"L12uS45119Za65Ej\" // для prod — один ключ",
-							"    }",
-							"};",
-							"",
-							"var host = config[env].host;",
-							"pm.environment.set(\"host\", host);",
-							"",
-							"var requestData = pm.request.body ? JSON.parse(pm.request.body.raw) : {};",
-							"var source = requestData[\"source\"];",
-							"",
-							"var sharedKey = \"\";",
-							"if (env === \"dev\") {",
-							"    sharedKey = config[env].shared_keys[source];",
-							"} else {",
-							"    sharedKey = config[env].shared_key;",
-							"}",
-							"pm.environment.set(\"shared_key\", sharedKey);",
-							"",
-							"function sortObject(obj) {",
-							"    if (Array.isArray(obj)) {",
-							"        return obj.map(sortObject);",
-							"    } else if (typeof obj === \"object\" && obj !== null) {",
-							"        return Object.keys(obj)",
-							"            .sort()",
-							"            .reduce((acc, key) => {",
-							"                acc[key] = sortObject(obj[key]); ",
-							"                return acc;",
-							"            }, {});",
-							"    }",
-							"    return obj;",
-							"}",
-							"",
-							"function generateHash(data, key) {",
-							"    if (\"hash\" in data) {",
-							"        delete data[\"hash\"];",
-							"    }",
-							"",
-							"    var sortedData = sortObject(data);",
-							"    var jsonString = JSON.stringify(sortedData, null, 0);",
-							"    var hashInput = jsonString + key;",
-							"",
-							"    return CryptoJS.SHA256(hashInput).toString();",
-							"}",
-							"",
-							"if (sharedKey) {",
-							"    var generatedHash = generateHash(requestData, sharedKey);",
-							"    requestData[\"hash\"] = generatedHash;",
+							"async function main() {",
+							"    const evaLibrary = pm.require('@eva-human/eva_library');",
+							"    // оновлюю дату",
+							"    evaLibrary.updateEnvironmentDate();",
+							"    ",
+							"    var requestData = JSON.parse(pm.request.body.raw);",
+							"    // визначаю ключ і host, і оновлюю тіло запиту",
+							"    key = evaLibrary.human2getSharedKeyAndSetHostToEnvironment(requestData[\"source\"]);",
+							"    requestData[\"hash\"] = await evaLibrary.sha256Hex(requestData, key);",
 							"    pm.request.body.update(JSON.stringify(requestData, null, 0));",
-							"} else {",
-							"    console.warn(\"Shared key not found for source:\", source);",
-							"}"
+							"}",
+							"",
+							"main();"
 						],
 						"type": "text/javascript",
-						"packages": {},
+						"packages": {
+							"@eva-human/eva_library": {
+								"id": "01993cfe-6d3a-780c-861a-c9745b650b3b"
+							}
+						},
 						"requests": {}
 					}
 				},
@@ -217,7 +127,71 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"phone\": \"38098747\",\n    \"contract_id\": \"013E3DAD-08CC-4336-A3A9-14E31E9911DA\",\n    \"buyer_id\": 1,\n    \"action\": \"merge\",\n    \"date\": \"вставляю динамічно\",\n    \"source\": \"mobapp\",\n    \"changes\": {\n        \"merge_contract_id\": \"BB32FC12-2BF4-4CD0-A058-50C30180616E\",\n        \"merge_buyer_id\": 2,\n        \"merge_cards\": [\n            \"2910000344630\"\n        ]\n    }\n}"
+					"raw": "{\n    \"phone\": \"38098747\",\n    \"contract_id\": \"013E3DAD-08CC-4336-A3A9-14E31E9911DA\",\n    \"buyer_id\": 1,\n    \"action\": \"merge\",\n    \"date\": \"{{date}}\",\n    \"source\": \"mobapp\",\n    \"changes\": {\n        \"merge_contract_id\": \"BB32FC12-2BF4-4CD0-A058-50C30180616E\",\n        \"merge_buyer_id\": 2,\n        \"merge_cards\": [\n            \"2910000344630\"\n        ]\n    }\n}"
+				},
+				"url": "{{host}}/client"
+			},
+			"response": []
+		},
+		{
+			"name": "Merge invalid date type",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "eb894a3e-5b66-40f7-b317-28f887fd2d8e",
+						"exec": [
+							"async function main() {",
+							"    const evaLibrary = pm.require('@eva-human/eva_library');",
+							"    // оновлюю дату",
+							"    evaLibrary.updateEnvironmentDate();",
+							"    ",
+							"    var requestData = JSON.parse(pm.request.body.raw);",
+							"    // визначаю ключ і host, і оновлюю тіло запиту",
+							"    key = evaLibrary.human2getSharedKeyAndSetHostToEnvironment(requestData[\"source\"]);",
+							"    requestData[\"hash\"] = await evaLibrary.sha256Hex(requestData, key);",
+							"    pm.request.body.update(JSON.stringify(requestData, null, 0));",
+							"}",
+							"",
+							"main();"
+						],
+						"type": "text/javascript",
+						"packages": {
+							"@eva-human/eva_library": {
+								"id": "01993cfe-6d3a-780c-861a-c9745b650b3b"
+							}
+						},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c151578d-1534-4448-814e-05daa769623e",
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "9f69a679-5643-4488-84df-901f1f38e94f",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"phone\": \"38098747\",\n    \"contract_id\": \"013E3DAD-08CC-4336-A3A9-14E31E9911DA\",\n    \"buyer_id\": 1,\n    \"action\": \"merge\",\n    \"date\": \"{{date}}\",\n    \"source\": \"mobapp\",\n    \"changes\": {\n        \"merge_contract_id\": \"BB32FC12-2BF4-4CD0-A058-50C30180616E\",\n        \"merge_buyer_id\": 2,\n        \"merge_cards\": [\n            \"2910000344630\"\n        ]\n    }\n}"
 				},
 				"url": "{{host}}/client"
 			},
