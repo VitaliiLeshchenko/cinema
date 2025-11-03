@@ -127,7 +127,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"phone\": \"\",\n    \"contract_id\": \"FEFE0000-0000-0000-0000-{{phoneTest}}\",\n    \"buyer_id\": -320,\n    \"action\": \"merge\",\n    \"date\": \"{{date}}\",\n    \"source\": \"processing\",\n    \"changes\": {\n        \"merge_contract_id\": \"FEFE0000-0000-0000-0000-380000000319\",\n        \"merge_buyer_id\": -319,\n        \"remaining_phone\": \"\",\n        \"merge_cards\": [\n            \"-319\"\n        ]\n    }\n}"
+					"raw": "{\n    \"phone\": \"\",\n    \"contract_id\": \"B8C64FD5-B9F6-47A8-BAAE-E010649B0A6B\",\n    \"buyer_id\": 33,\n    \"action\": \"merge\",\n    \"date\": \"2025-11-03 11:29:19.960\",\n    \"source\": \"processing\",\n    \"changes\": {\n        \"merge_contract_id\": \"39845E9A-52B2-454A-86B1-4AA95CF39662\",\n        \"merge_buyer_id\": 34,\n        \"merge_cards\": [\n            \"2990000004000\",\n            \"2990000003997\"\n        ]\n    }\n}"
 				},
 				"url": "{{host}}/client"
 			},
