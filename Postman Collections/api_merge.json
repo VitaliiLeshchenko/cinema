@@ -70,6 +70,70 @@
 			"response": []
 		},
 		{
+			"name": "Merge два клієнти із затертими номерами телефонів",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "eb894a3e-5b66-40f7-b317-28f887fd2d8e",
+						"exec": [
+							"async function main() {\r",
+							"    const evaLibrary = pm.require('@eva-human/eva_library');\r",
+							"    // оновлюю дату\r",
+							"    evaLibrary.updateEnvironmentDate();\r",
+							"    \r",
+							"    var requestData = JSON.parse(pm.request.body.raw);\r",
+							"    // визначаю ключ і host, і оновлюю тіло запиту\r",
+							"    key = evaLibrary.human2getSharedKeyAndSetHostToEnvironment(requestData[\"source\"]);\r",
+							"    requestData[\"hash\"] = await evaLibrary.sha256Hex(requestData, key);\r",
+							"    pm.request.body.update(JSON.stringify(requestData, null, 0));\r",
+							"}\r",
+							"\r",
+							"main();"
+						],
+						"type": "text/javascript",
+						"packages": {
+							"@eva-human/eva_library": {
+								"id": "01993cfe-6d3a-780c-861a-c9745b650b3b"
+							}
+						},
+						"requests": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "c151578d-1534-4448-814e-05daa769623e",
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {},
+						"requests": {}
+					}
+				}
+			],
+			"id": "6e43d7d5-d5f1-441c-a41e-ffb8c9e06d4b",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"phone\": \"{{phoneTest}}\",\n    \"contract_id\": \"FEFE0000-0000-0000-0000-{{phoneTest}}\",\n    \"buyer_id\": 253,\n    \"action\": \"merge\",\n    \"date\": \"{{date}}\",\n    \"source\": \"processing\",\n    \"changes\": {\n        \"merge_contract_id\": \"FEFE0000-0000-0000-0000-380000000253\",\n        \"merge_buyer_id\": 253,\n        \"remaining_phone\": \"380000000253\",\n        \"merge_cards\": [\n            \"380000000253\"\n        ]\n    }\n}"
+				},
+				"url": "{{host}}/client"
+			},
+			"response": []
+		},
+		{
 			"name": "Merge invalid source",
 			"event": [
 				{
