@@ -63,7 +63,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"phone\": \"{{phoneTest}}\",\n    \"contract_id\": \"FEFE0000-0000-0000-0000-{{phoneTest}}\",\n    \"buyer_id\": 253,\n    \"action\": \"merge\",\n    \"date\": \"{{date}}\",\n    \"source\": \"processing\",\n    \"changes\": {\n        \"merge_contract_id\": \"FEFE0000-0000-0000-0000-380000000253\",\n        \"merge_buyer_id\": 253,\n        \"remaining_phone\": \"380000000253\",\n        \"merge_cards\": [\n            \"380000000253\"\n        ]\n    }\n}"
+					"raw": "{\n    \"phone\": \"380938382429\",\n    \"contract_id\": \"F60D1BAA-E3A1-400B-B1CF-38700A4F70EC\",\n    \"buyer_id\": 40,\n    \"action\": \"merge\",\n    \"date\": \"2025-12-02 10:15:55.530\",\n    \"source\": \"processing\",\n    \"changes\": {\n        \"merge_contract_id\": \"9EBA84CB-8055-44AB-8B94-0CF6E677C57D\",\n        \"merge_buyer_id\": 41,\n        \"remaining_phone\": \"380501945789\",\n        \"merge_cards\": [\n            \"2910000321303\"\n        ]\n    }\n}"
 				},
 				"url": "{{host}}/client"
 			},
