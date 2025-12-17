@@ -127,7 +127,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"sign\": \"leshchenko\",\n    \"action\": \"merge\",\n    \"buyer_id\": \"1174737\",\n    \"changes\": {\n        \"merge_buyer_id\": \"3476087315\",\n        \"merge_cards\": [\n            \"5007062564841\"\n        ],\n        \"merge_contract_id\": \"e3691d2b-20b1-6567-89fc-6e850887b5d4\"\n    },\n    \"contract_id\": \"fb2efa48-8812-4c09-bc20-16272d82be53\",\n    \"date\": \"2025-12-17 12:45:33.734\",\n    \"phone\": \"380980306440\",\n    \"source\": \"processing\"\n}"
+					"raw": "{\n    \"sign\": \"leshchenko\",\n  \"action\": \"merge\",\n  \"buyer_id\": \"3471322435\",\n  \"changes\": {\n    \"merge_buyer_id\": \"1301898\",\n    \"merge_cards\": [\n      \"2910006212728\"\n    ],\n    \"merge_contract_id\": \"698aadd2-4e44-4dd8-a7dc-1aee4e26cf20\"\n  },\n  \"contract_id\": \"57a2c4a9-826e-4611-f193-16bb424cfe3e\",\n  \"date\": \"{{date}}\",\n  \"phone\": \"380952577714\",\n  \"source\": \"processing\"\n}\n"
 				},
 				"url": "{{host}}/client"
 			},
