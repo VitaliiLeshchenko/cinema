@@ -191,7 +191,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"sign\": \"leshchenko\",\n    \"phone\": \"380000000045\",\n    \"contract_id\": \"46D9C3F4-BD80-4936-BEA1-1E55C9CAD93B\",\n    \"buyer_id\": \"9264124\",\n    \"action\": \"merge\",\n    \"date\": \"{{date}}\",\n    \"source\": \"processing\",\n    \"changes\": {\n        \"merge_contract_id\": \"4A37F6A1-4C42-4AA4-AAB1-3F7CE0BC2051\",\n        \"merge_buyer_id\": 2615659,\n        \"merge_cards\": [\n            \"20251217125257\"\n        ]\n    }\n}"
+					"raw": "{\n    \"sign\": \"leshchenko\",\n    \"phone\": \"{{phoneTest}}\",\n    \"contract_id\": \"FEFE0000-0000-0000-0000-{{phoneTest}}\",\n    \"buyer_id\": \"{{testIndex}}\",\n    \"action\": \"merge\",\n    \"date\": \"{{date}}\",\n    \"source\": \"processing\",\n    \"changes\": {\n        \"merge_contract_id\": \"FEFE0000-0000-0000-0000-380000000548\",\n        \"merge_buyer_id\": -547,\n        \"merge_cards\": [\n            \"-547\"\n        ]\n    }\n}"
 				},
 				"url": "{{host}}/client"
 			},
