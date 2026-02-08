@@ -70,7 +70,7 @@
 			"response": []
 		},
 		{
-			"name": "Merge processing Copy",
+			"name": "Merge localhost",
 			"event": [
 				{
 					"listen": "prerequest",
