@@ -127,7 +127,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"phone\": \"380968682513\",\n    \"contract_id\": \"4154113F-7A02-4315-AEEA-BC82217E90AB\",\n    \"buyer_id\": 43,\n    \"action\": \"merge\",\n    \"date\": \"2025-12-22 17:16:08.180\",\n    \"source\": \"processing\",\n    \"changes\": {\n        \"merge_contract_id\": \"581413C0-4593-4C10-8C4B-6EF4F43FE9DB\",\n        \"merge_buyer_id\": 44,\n        \"remaining_phone\": \"380999618683\",\n        \"merge_cards\": [\n            \"2910000321990\"\n        ]\n    }\n}"
+					"raw": "{\n    \"phone\": \"{{phoneTest}}\",\n    \"contract_id\":\"FEFE0000-0000-0000-0000-{{phoneTest}}\",\n    \"buyer_id\": \"{{testIndex}}\",\n    \"action\": \"merge\",\n    \"date\": \"{{date}}\",\n    \"source\": \"processing\",\n    \"changes\": {\n        \"merge_contract_id\": \"FEFE0000-0000-0000-0000-{{phoneTest}}\",\n        \"merge_buyer_id\": \"{{testIndex}}\",\n        \"merge_cards\": [\n            \"{{testIndex}}\"\n        ]\n    }\n}"
 				},
 				"url": "{{host}}/client"
 			},
