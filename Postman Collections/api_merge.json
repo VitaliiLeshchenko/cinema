@@ -85,6 +85,10 @@
 							"    var requestData = JSON.parse(pm.request.body.raw);\r",
 							"    // визначаю ключ і host, і оновлюю тіло запиту\r",
 							"    key = evaLibrary.human2getSharedKeyAndSetHostToEnvironment(requestData[\"source\"]);\r",
+							"\r",
+							"    requestData[\"changes\"] = {}\r",
+							"\r",
+							"\r",
 							"    requestData[\"hash\"] = await evaLibrary.sha256Hex(requestData, key);\r",
 							"    pm.request.body.update(JSON.stringify(requestData, null, 0));\r",
 							"}\r",
@@ -127,7 +131,12 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"phone\": \"{{phoneTest}}\",\n    \"contract_id\":\"FEFE0000-0000-0000-0000-{{phoneTest}}\",\n    \"buyer_id\": \"{{testIndex}}\",\n    \"action\": \"merge\",\n    \"date\": \"{{date}}\",\n    \"source\": \"processing\",\n    \"changes\": {\n        \"merge_contract_id\": \"FEFE0000-0000-0000-0000-{{phoneTest}}\",\n        \"merge_buyer_id\": \"{{testIndex}}\",\n        \"merge_cards\": [\n            \"{{testIndex}}\"\n        ]\n    }\n}"
+					"raw": "{\n    \"phone\": \"{{phoneTest}}\",\n    \"contract_id\": \"FEFE0000-0000-0000-0000-{{phoneTest}}\",\n    \"buyer_id\": \"{{testIndex}}\",\n    \"action\": \"merge\",\n    \"date\": \"{{date}}\",\n    \"source\": \"processing\",\n    \"changes\": {\n        \"тут буде \" : \"Є\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": "{{host}}/client"
 			},
