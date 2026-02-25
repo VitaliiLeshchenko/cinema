@@ -21,6 +21,15 @@
 							"    var requestData = JSON.parse(pm.request.body.raw);\r",
 							"    // визначаю ключ і host, і оновлюю тіло запиту\r",
 							"    key = evaLibrary.human2getSharedKeyAndSetHostToEnvironment(requestData[\"source\"]);\r",
+							"\r",
+							"    var testIndex = parseInt(pm.environment.get(\"testIndex\")) + 1;\r",
+							"    phoneNumberTest = \"38000000\" + ((testIndex * -1));\r",
+							"    testIndex = String(testIndex)\r",
+							"    requestData[\"changes\"] = {}\r",
+							"    requestData[\"changes\"][\"merge_contract_id\"] = \"FEFE0000-0000-0000-0000-\" + phoneNumberTest\r",
+							"    requestData[\"changes\"][\"merge_buyer_id\"] = testIndex\r",
+							"    requestData[\"changes\"][\"merge_cards\"] = [testIndex]\r",
+							"\r",
 							"    requestData[\"hash\"] = await evaLibrary.sha256Hex(requestData, key);\r",
 							"    pm.request.body.update(JSON.stringify(requestData, null, 0));\r",
 							"}\r",
@@ -63,86 +72,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"phone\": \"380996849456\",\n    \"contract_id\": \"3E8D8D58-31FE-480B-BE8C-557090BB7E68\",\n    \"buyer_id\": 70,\n    \"action\": \"merge\",\n    \"date\": \"2025-12-09 16:41:51.877\",\n    \"source\": \"processing\",\n    \"changes\": {\n        \"merge_contract_id\": \"61E391FD-3FF9-4FD2-BD43-866E1C716E1F\",\n        \"merge_buyer_id\": 71,\n        \"remaining_phone\": \"380504542054\",\n        \"merge_cards\": [\n            \"2910000344890\"\n        ]\n    }\n}"
-				},
-				"url": "{{host}}/client"
-			},
-			"response": []
-		},
-		{
-			"name": "Merge localhost",
-			"event": [
-				{
-					"listen": "prerequest",
-					"script": {
-						"id": "eb894a3e-5b66-40f7-b317-28f887fd2d8e",
-						"exec": [
-							"async function main() {\r",
-							"    const evaLibrary = pm.require('@eva-human/eva_library');\r",
-							"    // оновлюю дату\r",
-							"    evaLibrary.updateEnvironmentDate();\r",
-							"    \r",
-							"    var requestData = JSON.parse(pm.request.body.raw);\r",
-							"    // визначаю ключ і host, і оновлюю тіло запиту\r",
-							"    key = evaLibrary.human2getSharedKeyAndSetHostToEnvironment(requestData[\"source\"]);\r",
-							"\r",
-							"    var testIndex = parseInt(pm.environment.get(\"testIndex\")) + 1;\r",
-							"    phoneNumberTest = \"38000000\" + ((testIndex * -1));\r",
-							"    testIndex = String(testIndex)\r",
-							"    requestData[\"changes\"] = {}\r",
-							"    requestData[\"changes\"][\"merge_contract_id\"] = \"FEFE0000-0000-0000-0000-\" + phoneNumberTest\r",
-							"    requestData[\"changes\"][\"merge_buyer_id\"] = testIndex\r",
-							"    requestData[\"changes\"][\"remaining_phone\"] = phoneNumberTest\r",
-							"    requestData[\"changes\"][\"merge_cards\"] = [testIndex]\r",
-							"\r",
-							"    requestData[\"hash\"] = await evaLibrary.sha256Hex(requestData, key);\r",
-							"    pm.request.body.update(JSON.stringify(requestData, null, 0));\r",
-							"}\r",
-							"\r",
-							"main();"
-						],
-						"type": "text/javascript",
-						"packages": {
-							"@eva-human/eva_library": {
-								"id": "01993cfe-6d3a-780c-861a-c9745b650b3b"
-							}
-						},
-						"requests": {}
-					}
-				},
-				{
-					"listen": "test",
-					"script": {
-						"id": "c151578d-1534-4448-814e-05daa769623e",
-						"exec": [
-							""
-						],
-						"type": "text/javascript",
-						"packages": {},
-						"requests": {}
-					}
-				}
-			],
-			"id": "a2e2af45-47f3-431a-8819-a4030239a199",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"phone\": \"{{phoneTest}}\",\n    \"contract_id\": \"FEFE0000-0000-0000-0000-{{phoneTest}}\",\n    \"buyer_id\": \"{{testIndex}}\",\n    \"action\": \"merge\",\n    \"date\": \"{{date}}\",\n    \"source\": \"processing\",\n    \"changes\": {\n        \"Вираховую в прескрипті\" : \"\"\n    }\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					"raw": "{\n    \"phone\": \"{{phoneTest}}\",\n    \"contract_id\": \"FEFE0000-0000-0000-0000-{{phoneTest}}\",\n    \"buyer_id\": \"{{testIndex}}\",\n    \"action\": \"merge\",\n    \"date\": \"{{date}}\",\n    \"source\": \"processing\",\n    \"changes\": {\n        \"Вираховую в прескрипті\" : \"\"\n    }\n}"
 				},
 				"url": "{{host}}/client"
 			},
