@@ -433,7 +433,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"phone\": \"{{phoneTest}}\",\n    \"contract_id\": \"FEFE0000-0000-0000-0000-{{phoneTest}}\",\n    \"buyer_id\": \"{{testIndex}}\",\n    \"action\": \"merge\",\n    \"date\": \"{{date}}\",\n    \"source\": \"processing\",\n    \"changes\": {\n        \"Вираховую в прескрипті\" : \"\"\n    }\n}"
+					"raw": "{\n        \"phone\": \"380994875788\",\n        \"action\": \"merge\",\n        \"buyer_id\": \"3132519624\",\n        \"changes\": {\n            \"merge_buyer_id\": \"3490603933\",\n            \"merge_cards\": [\n                \"5003034594090\"\n            ],\n            \"merge_contract_id\": \"c27c6922-ba76-734a-d6a7-2050e598b9d0\",\n            \"remaining_phone\": \"380994875788\"\n        },\n        \"contract_id\": \"d4125ce1-b218-45ee-bf2c-2e71aa6da3f7\",\n        \"date\": \"2026-01-31 13:17:16.350\",\n        \"source\": \"processing\"\n}"
 				},
 				"url": "{{host}}/client"
 			},
